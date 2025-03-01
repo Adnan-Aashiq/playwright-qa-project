@@ -18,7 +18,8 @@ export class CartPage {
   }
 
   async proceedToCheckout() {
-    await this.proceedToCheckoutButton.waitFor({ state: 'visible', timeout: 50000 });
+    await this.page.waitForSelector("button[data-role='proceed-to-checkout']", { state: 'visible', timeout: 50000 });
+    await this.page.waitForTimeout(5000);
     await this.proceedToCheckoutButton.click();
   }
 }

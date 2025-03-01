@@ -12,8 +12,7 @@ export class OrderConfirmationPage {
   }
 
     async verifyOrderStatus() {
-        this.page.waitForLoadState('domcontentloaded')
-        // Get the text content and trim whitespace
+        await this.page.waitForSelector("select[name='sc']", { state: 'visible', timeout: 30000 });
 const actualStatus = await this.statusMessage.textContent();
 const cleanedStatus = actualStatus?.trim();
 
@@ -23,5 +22,10 @@ expect(cleanedStatus).toContain("190 - Success");
 
   async proceedToCheckout() {
     await this.submitStatusButton.click();
+  }
+
+  async verifySuccessMessage() {
+    await this.page.waitForSelector('.message-success.success.message', { state: 'visible', timeout: 30000 });
+    await expect(this.page.locator('.message-success.success.message')).toHaveText('Your order has been placed successfully.');
   }
 }

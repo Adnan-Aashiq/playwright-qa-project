@@ -16,13 +16,12 @@ export class PaymentPage {
   }
 
   async selectPaymentMethod(method: 'ideal' | 'bancontact') {
-    this.page.waitForLoadState('domcontentloaded')
-    await this.page.locator('.payment-group').waitFor({ state: 'visible', timeout: 50000 });
+    await this.page.waitForSelector('.payment-group', { state: 'visible', timeout: 30000 });
   
     if (method === 'ideal') {
-      await this.idealOption.waitFor({ state: 'visible', timeout: 50000 });
+      await this.page.waitForSelector('#buckaroo_magento2_ideal', { state: 'visible', timeout: 30000 });
       await this.idealOption.click();
-      await this.bankSelection.waitFor({ state: 'attached', timeout: 50000 });
+      await this.page.waitForSelector('.buckaroo_magento2_ideal .bank-types', { state: 'visible', timeout: 30000 });
       await this.bankSelection.click();
     } else {
       await this.bancontactOption.waitFor({ state: 'attached', timeout: 50000 });
