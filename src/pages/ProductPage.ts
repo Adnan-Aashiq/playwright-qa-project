@@ -34,13 +34,10 @@ export class ProductPage {
   }
 
   async verifyAddedProduct(productName: string) {
-      // Wait for message system to appear
   await this.page.waitForSelector('div.message-success', { state: 'visible', timeout: 15000 });
-
-  // Verify text content with explicit retries
   await expect(this.successMessage).toContainText(`You added ${productName} to your`, {
     timeout: 15000,
-    ignoreCase: true // Optional: if text case might vary
+    ignoreCase: true 
   });
     
   }
