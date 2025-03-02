@@ -13,7 +13,7 @@
 
 4. Run Cypress tests.
 
-    - 3.1 Open terminal in the cloned folder and type `npm run open-cypress-runner`. To run the scripts headed. After this you've to Generate HTML Report to view the results **OR**
+    - 3.1 Open terminal in the cloned folder and type `npm run test:critical-headed`. To run the scripts headed. After this you've to Generate HTML Report to view the results **OR**
     - 3.2 Open terminal in the cloned folder and type `npm run test:critical:headless`. To run the scripts headlessly. After this Playwright automaticallty opens the HTML Report.
 
 5. Generate HTML Report.
