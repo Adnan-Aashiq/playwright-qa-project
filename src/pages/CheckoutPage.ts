@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator, expect } from "@playwright/test";
 
 export class CheckoutPage {
   readonly page: Page;
@@ -11,11 +11,10 @@ export class CheckoutPage {
   readonly emailInput: Locator;
   readonly firstNameInput: Locator;
   readonly lastNameInput: Locator;
-  private readonly PAYMENT_URL = '/checkout/#payment';
 
   constructor(page: Page) {
     this.page = page;
-    this.emailInput = page.locator('#customer-email');
+    this.emailInput = page.locator("#customer-email");
     this.firstNameInput = page.locator("input[name='firstname']");
     this.lastNameInput = page.locator("input[name='lastname']");
     this.countryInput = page.locator("select[name='country_id']");
@@ -23,7 +22,7 @@ export class CheckoutPage {
     this.cityInput = page.locator("input[name='city']");
     this.postalCodeInput = page.locator("input[name='postcode']");
     this.phoneInput = page.locator("input[name='telephone']");
-    this.nextButton = page.locator('.button.action.continue.primary');
+    this.nextButton = page.locator(".button.action.continue.primary");
   }
 
   async fillBillingDetails(details: {
@@ -47,9 +46,9 @@ export class CheckoutPage {
   }
 
   async clickNext() {
-    await this.nextButton.waitFor({ state: 'visible', timeout: 50000 });
+    await this.nextButton.waitFor({ state: "visible", timeout: 50000 });
     await this.nextButton.scrollIntoViewIfNeeded();
     await this.nextButton.click();
-    await this.page.waitForURL('**/checkout/#payment');
+    await this.page.waitForURL("**/checkout/#payment");
   }
 }

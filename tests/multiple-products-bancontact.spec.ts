@@ -29,7 +29,6 @@ test('Multiple products with Bancontact', async ({ page }) => {
   await checkoutPage.clickNext();
   
   await paymentPage.selectPaymentMethod('bancontact');
-  await paymentPage.clickPlaceOrder('bancontact');
   await paymentPage.fillBancontactDetails(BANCONTACT_CARD);
 
   await orderConfirmationPage.verifyOrderStatus('bancontact');
