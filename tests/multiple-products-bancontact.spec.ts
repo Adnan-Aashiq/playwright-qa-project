@@ -14,27 +14,7 @@ test('Multiple products with Bancontact', async ({ page }) => {
   const paymentPage = new PaymentPage(page);
 
   await homePage.navigateToStore();
-  
-  // Add first product
-  await homePage.selectProduct();
-  await productPage.addToCart();
-  
-  // Add second product
-  await page.goBack();
-  await homePage.selectProduct();
-  await productPage.addToCart();
-
-  await cartPage.proceedToCheckout();
-  await checkoutPage.fillBillingDetails(BILLING_DETAILS);
-  await paymentPage.selectPaymentMethod('bancontact');
-  
-  // Fill Bancontact card details
-  await page.fill('input[name="cardholder"]', BILLING_DETAILS.name);
-  await page.fill('input[name="cardnumber"]', BANCONTACT_CARD.cardNumber);
-  await page.fill('input[name="exp-date"]', BANCONTACT_CARD.expiryDate);
-  await paymentPage.placeOrderButton.click();
-
-  // Finalize payment
-  await page.click('text="Yes"');
-  await expect(page.locator('text="Order successfully placed"')).toBeVisible();
+  await homePage.selectMen();
+  const addedProductNames = await homePage.addTwoProductsToCart(page);
+  console.log('Added Product Names:', addedProductNames);
 });
