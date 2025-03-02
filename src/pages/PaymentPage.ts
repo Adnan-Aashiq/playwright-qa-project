@@ -72,10 +72,6 @@ export class PaymentPage {
     expiryMonth: string;
     expiryYear: string;
   }) {
-    await this.page.waitForSelector(".pages", {
-      state: "visible",
-      timeout: 30000,
-    });
     await this.nameOnCard.fill(card.name);
     await this.cardNumber.fill(card.cardNumber);
     await this.expiryMonth.fill(card.expiryMonth);

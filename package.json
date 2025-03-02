@@ -2,7 +2,10 @@
   "name": "playwright-e2e-assessment",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:critical-headed": "playwright test tests/single-product-ideal.spec.ts tests/multiple-products-bancontact.spec.ts --project=chromium --headed",
+    "test:critical:headless": "playwright test tests/single-product-ideal.spec.ts tests/multiple-products-bancontact.spec.ts --project=chromium"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
