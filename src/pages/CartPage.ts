@@ -4,17 +4,29 @@ export class CartPage {
   readonly page: Page;
   readonly proceedToCheckoutButton: Locator;
   readonly productNameInCart: Locator
-  private readonly SHIPPING_URL = '/checkout/#shipping';
 
   constructor(page: Page) {
     this.page = page;
-    this.productNameInCart = page.locator('.cart.item .product-item-name');
+    this.productNameInCart = page.locator('.cart.item .product-item-name a');
     this.proceedToCheckoutButton = page.locator("button[data-role='proceed-to-checkout']");
   }
 
-  async verifyProductInCart(selectedProductName: string) {
-    await expect(this.productNameInCart).toBeVisible();
-    await expect(this.productNameInCart).toHaveText(selectedProductName);
+  async verifyProductsInCart(addedProducts: string[]) {
+    // Get all product name elements in cart
+    const cartProductNames = this.productNameInCart;
+    
+    // Verify product count matches
+    await expect(cartProductNames).toHaveCount(addedProducts.length);
+    
+    // Get all product texts
+    const actualProducts = await cartProductNames.allTextContents();
+    const cleanedProducts = actualProducts.map(name => name.trim());
+  
+    // Verify all products exist (order-agnostic)
+    expect(cleanedProducts).toEqual(expect.arrayContaining(addedProducts));
+  
+    // For order-sensitive verification (if needed)
+    // expect(cleanedProducts).toEqual(addedProducts);
   }
 
   async proceedToCheckout() {

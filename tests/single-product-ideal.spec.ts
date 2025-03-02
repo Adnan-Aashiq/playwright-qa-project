@@ -17,24 +17,20 @@ test('Single product order with iDEAL', async ({ page }) => {
 
   await homePage.navigateToStore();
   await homePage.selectMen();
-  const selectedProductName = await homePage.selectProduct();
+  const selectedProductName = await homePage.addProductsToCart(page, { quantity: 1 });
 
-  await productPage.selectSize();
-  await productPage.selectColor();
-  await productPage.addToCart();
-  await productPage.verifyAddedProduct(selectedProductName);
   await productPage.clickOnCart();
   await productPage.viewAndEditCart();
 
-  await cartPage.verifyProductInCart(selectedProductName);
+  await cartPage.verifyProductsInCart(selectedProductName);
   await cartPage.proceedToCheckout();
   
   await checkoutPage.fillBillingDetails(BILLING_DETAILS);
   await checkoutPage.clickNext();
   
   await paymentPage.selectPaymentMethod('ideal');
-  await paymentPage.clickPlaceOrder();
+  await paymentPage.clickPlaceOrder('ideal');
 
-  await orderConfirmationPage.verifyOrderStatus();
+  await orderConfirmationPage.verifyOrderStatus('ideal');
   await orderConfirmationPage.proceedToCheckout();
 });

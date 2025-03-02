@@ -10,6 +10,8 @@ export const BILLING_DETAILS = {
   };
   
   export const BANCONTACT_CARD = {
+    name: 'Adnan Testing',
     cardNumber: '67034200554565015',
-    expiryDate: '01/29'
+    expiryMonth: '01',
+    expiryYear: '29'
   };

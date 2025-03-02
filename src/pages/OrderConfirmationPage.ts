@@ -11,14 +11,32 @@ export class OrderConfirmationPage {
     this.submitStatusButton = page.locator("input[value='Submit status']");
   }
 
-    async verifyOrderStatus() {
-        await this.page.waitForSelector("select[name='sc']", { state: 'visible', timeout: 30000 });
-const actualStatus = await this.statusMessage.textContent();
-const cleanedStatus = actualStatus?.trim();
+  async verifyOrderStatus(paymentMethod: 'ideal' | 'bancontact') {
+    // Wait for status container
+    await this.page.waitForSelector("select[name='sc']", { 
+        state: 'visible', 
+        timeout: 30000 
+    });
 
-// Perform assertion with explicit comparison
-expect(cleanedStatus).toContain("190 - Success");
+    // Get and clean status text
+    const actualStatus = await this.statusMessage.textContent();
+    const cleanedStatus = actualStatus?.trim() || '';
+
+    // Determine expected status based on payment method
+    const expectedStatus = {
+        ideal: "190 - Success",
+        bancontact: "Y - Yes"
+    }[paymentMethod.toLowerCase() as keyof typeof expectedStatus];
+
+    if (!expectedStatus) {
+        throw new Error(`Invalid payment method: ${paymentMethod}`);
     }
+
+    // Perform assertion with dynamic expected value
+    expect(cleanedStatus).toContain(
+        expectedStatus,
+    );
+}
 
   async proceedToCheckout() {
     await this.submitStatusButton.click();
