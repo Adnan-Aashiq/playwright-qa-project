@@ -11,7 +11,6 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
   use: {
-    viewport: { width: 1280, height: 720 },
     actionTimeout: 50000,
     baseURL: "https://m2-support.plugins.buckaroo.io/",
     trace: "on-first-retry",
