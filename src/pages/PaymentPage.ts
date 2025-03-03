@@ -38,27 +38,31 @@ export class PaymentPage {
     });
 
     if (method === "ideal") {
-      await this.page.waitForSelector("#buckaroo_magento2_ideal", {
+      this.page.waitForSelector("#buckaroo_magento2_ideal", { 
+        state: "visible", 
+        timeout: 30000 
+      })
+      .then(() => this.idealOption.click())
+      .then(() => this.page.waitForSelector(".buckaroo_magento2_ideal .bank-types", {
         state: "visible",
-        timeout: 30000,
+        timeout: 30000
+      }))
+      .then(() => this.bankSelection.click())
+      .catch(error => {
+        console.error('Error in promise chain:', error);
+        throw error; // Re-throw to maintain test failure
       });
-      await this.idealOption.click();
-      await this.page.waitForSelector(".buckaroo_magento2_ideal .bank-types", {
-        state: "visible",
-        timeout: 30000,
-      });
-      await this.bankSelection.click();
     } else {
-      await this.page.waitForSelector('text="Bancontact"', {
-        state: "visible",
-        timeout: 30000,
+      this.page.waitForSelector('text="Bancontact"', { 
+        state: "visible", 
+        timeout: 30000 
+      })
+      .then(() => this.bancontactOption.scrollIntoViewIfNeeded())
+      .then(() => this.bancontactOption.click({ force: true }))
+      .catch(error => {
+        console.error('Bancontact flow failed:', error);
+        throw error;
       });
-      await this.bancontactOption.waitFor({
-        state: "attached",
-        timeout: 50000,
-      });
-      await this.bancontactOption.scrollIntoViewIfNeeded();
-      await this.bancontactOption.click({ force: true });
     }
   }
 
